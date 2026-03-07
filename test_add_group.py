@@ -1,4 +1,10 @@
-import ...
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+import unittest, time, re
 
 class TestAddGroup(unittest.TestCase):
     def setUp(self):
@@ -8,20 +14,16 @@ class TestAddGroup(unittest.TestCase):
     
     def test_add_group(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/group.php")
-        wd.find_element_by_xpath("//*/text()[normalize-space(.)='']/parent::*").click()
+        wd.get("http://localhost/addressbook/")
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("admin")
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-        wd.get("https://pythonru.com/osnovy/modul-math-python")
-        wd.get("http://localhost/addressbook/group.php")
+        wd.find_element_by_css_selector("input[type=\"submit\"]").click()
+        wd.find_element_by_link_text("group").click()
         wd.find_element_by_name("new").click()
-        wd.get("https://pythonru.com/osnovy/modul-math-python")
-        wd.get("http://localhost/addressbook/group.php?new=New+group")
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
         wd.find_element_by_name("group_name").send_keys("test")
@@ -32,7 +34,6 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element_by_name("group_footer").clear()
         wd.find_element_by_name("group_footer").send_keys("test")
         wd.find_element_by_name("submit").click()
-        wd.get("http://localhost/addressbook/group.php")
         wd.find_element_by_link_text("group page").click()
         wd.find_element_by_link_text("Logout").click()
     
