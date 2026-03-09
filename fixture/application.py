@@ -1,10 +1,9 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
-import unittest
-from group import Group
+
 
 class Application:
     def __init__(self):
-        self.wd = WebDriver(executable_path="drivers/geckodriver.exe")
+        self.wd = WebDriver(executable_path="../drivers/geckodriver.exe")
         # self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
