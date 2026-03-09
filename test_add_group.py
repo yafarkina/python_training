@@ -13,32 +13,25 @@ class test_add_group(unittest.TestCase):
     
     def test_add_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username = "admin", password = "secret")
-        self.open_group_page(wd)
         self.ctreate_group(wd, Group(name = "test", header = "test", footer = "test"))
-        self.return_to_groups_page(wd)
         self.logout(wd)
 
     def test_add_empty_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username = "admin", password = "secret")
-        self.open_group_page(wd)
         self.ctreate_group(wd, Group( name = "", header = "", footer = ""))
-        self.return_to_groups_page(wd)
         self.logout(wd)
 
     def logout(self, wd: WebDriver):
+        # return to groups page
+        wd.find_element_by_link_text("group page").click()
         # logout
         wd.find_element_by_link_text("Logout").click()
 
-    def return_to_groups_page(self, wd: WebDriver):
-        # return to groups page
-        wd.find_element_by_link_text("group page").click()
-
     def ctreate_group(self, wd: WebDriver, group):
         # init group creation
+        wd.find_element_by_link_text("groups").click()
         wd.find_element_by_name("new").click()
         # fill group form
         wd.find_element_by_name("group_name").click()
@@ -53,11 +46,9 @@ class test_add_group(unittest.TestCase):
         # submit group creation
         wd.find_element_by_name("submit").click()
 
-    def open_group_page(self, wd: WebDriver):
-        # open groups page
-        wd.find_element_by_link_text("groups").click()
-
     def login(self, wd: WebDriver, username, password):
+        # open home page
+        wd.get("http://localhost/addressbook/")
         # login
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
@@ -66,10 +57,6 @@ class test_add_group(unittest.TestCase):
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_css_selector("input[type=\"submit\"]").click()
-
-    def open_home_page(self, wd: WebDriver):
-        # open home page
-        wd.get("http://localhost/addressbook/")
 
     def tearDown(self):
         self.wd.quit()
