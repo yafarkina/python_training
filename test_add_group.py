@@ -12,24 +12,26 @@ class test_add_group(unittest.TestCase):
 
     
     def test_add_group(self):
-        wd = self.wd
-        self.login(wd, username = "admin", password = "secret")
-        self.ctreate_group(wd, Group(name = "test", header = "test", footer = "test"))
-        self.logout(wd)
+       # wd = self.wd
+        self.login(username = "admin", password = "secret")
+        self.ctreate_group(Group(name = "test", header = "test", footer = "test"))
+        self.logout()
 
     def test_add_empty_group(self):
-        wd = self.wd
-        self.login(wd, username = "admin", password = "secret")
-        self.ctreate_group(wd, Group( name = "", header = "", footer = ""))
-        self.logout(wd)
+       # wd = self.wd
+        self.login(username = "admin", password = "secret")
+        self.ctreate_group(Group( name = "", header = "", footer = ""))
+        self.logout()
 
-    def logout(self, wd: WebDriver):
+    def logout(self):
+        wd = self.wd
         # return to groups page
         wd.find_element_by_link_text("group page").click()
         # logout
         wd.find_element_by_link_text("Logout").click()
 
-    def ctreate_group(self, wd: WebDriver, group):
+    def ctreate_group(self, group):
+        wd = self.wd
         # init group creation
         wd.find_element_by_link_text("groups").click()
         wd.find_element_by_name("new").click()
@@ -46,7 +48,8 @@ class test_add_group(unittest.TestCase):
         # submit group creation
         wd.find_element_by_name("submit").click()
 
-    def login(self, wd: WebDriver, username, password):
+    def login(self, username, password):
+        wd = self.wd
         # open home page
         wd.get("http://localhost/addressbook/")
         # login

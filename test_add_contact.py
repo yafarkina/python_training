@@ -12,19 +12,20 @@ class test_add_contact(unittest.TestCase):
         self.wd.implicitly_wait(30)
 
     def test_add_contact(self):
-        wd = self.wd
-        self.login(wd, username="admin", password= "secret")
-        self.open_contact_page(wd)
-        self.create_contact(wd, Contact(firstname = "first", lastname = "last", company = "company", address = "address", telephone = "home"))
-        self.logout(wd)
+        self.login(username="admin", password= "secret")
+        self.open_contact_page()
+        self.create_contact(Contact(firstname = "first", lastname = "last", company = "company", address = "address", telephone = "home"))
+        self.logout()
 
-    def logout(self, wd: WebDriver):
+    def logout(self):
+        wd = self.wd
         # return to home page
         wd.find_element_by_link_text("home page").click()
         # logout
         wd.find_element_by_link_text("Logout").click()
 
-    def create_contact(self, wd: WebDriver, contact):
+    def create_contact(self, contact):
+        wd = self.wd
         # fill contact form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -44,11 +45,13 @@ class test_add_contact(unittest.TestCase):
         # submit contact creation
         wd.find_element_by_name("submit").click()
 
-    def open_contact_page(self, wd: WebDriver):
+    def open_contact_page(self):
+        wd = self.wd
         # open contact page
         wd.find_element_by_link_text("add new").click()
 
-    def login(self, wd: WebDriver, username, password):
+    def login(self, username, password):
+        wd = self.wd
         # open home page
         wd.get("http://localhost/addressbook/")
         # login
