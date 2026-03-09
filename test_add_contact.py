@@ -1,74 +1,22 @@
 #  -*- coding: utf-8 -*-
 
-from selenium.webdriver.firefox.webdriver import WebDriver
-import unittest
+import pytest
 from contact import Contact
+from application import Application
+
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
 
 
-class test_add_contact(unittest.TestCase):
-    def setUp(self):
-        self.wd = WebDriver(executable_path="drivers/geckodriver.exe")
-        # self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
-
-    def test_add_contact(self):
-        self.login(username="admin", password= "secret")
-        self.open_contact_page()
-        self.create_contact(Contact(firstname = "first", lastname = "last", company = "company", address = "address", telephone = "home"))
-        self.logout()
-
-    def logout(self):
-        wd = self.wd
-        # return to home page
-        wd.find_element_by_link_text("home page").click()
-        # logout
-        wd.find_element_by_link_text("Logout").click()
-
-    def create_contact(self, contact):
-        wd = self.wd
-        # fill contact form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.firstname)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.lastname)
-        wd.find_element_by_name("company").click()
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(contact.company)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.address)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(contact.telephone)
-        # submit contact creation
-        wd.find_element_by_name("submit").click()
-
-    def open_contact_page(self):
-        wd = self.wd
-        # open contact page
-        wd.find_element_by_link_text("add new").click()
-
-    def login(self, username, password):
-        wd = self.wd
-        # open home page
-        wd.get("http://localhost/addressbook/")
-        # login
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_css_selector("input[type=\"submit\"]").click()
-
-
-    def tearDown(self):
-        self.wd.quit()
-
-if __name__ == "__main__":
-    unittest.main()
+def test_add_contact(app):
+    app.login(username="admin", password= "secret")
+    app.open_contact_page()
+    app.create_contact(Contact(firstname = "first", lastname = "last", company = "company", address = "address", telephone = "home"))
+    app.return_to_home_page()
+    app.logout()
 
 
 
