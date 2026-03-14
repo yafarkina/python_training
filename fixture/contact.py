@@ -16,6 +16,22 @@ class ContactHelper:
     def create(self, contact):
         wd = self.app.wd
         # fill contact form
+        self.fill_contact_form(contact)
+        # submit contact creation
+        wd.find_element_by_name("submit").click()
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        self.select_first_contact()
+        wd.find_element_by_name("delete").click()
+        self.return_to_home_page()
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+    def fill_contact_form(self, contact):
+        wd = self.app.wd
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -31,5 +47,3 @@ class ContactHelper:
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
         wd.find_element_by_name("home").send_keys(contact.telephone)
-        # submit contact creation
-        wd.find_element_by_name("submit").click()
