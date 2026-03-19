@@ -8,7 +8,7 @@ class Application:
        # self.wd = WebDriver(executable_path="../drivers/geckodriver.exe")
         self.wd = WebDriver(executable_path="C:\PythonProject\drivers\geckodriver.exe")
        # self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(10)
+     #   self.wd.implicitly_wait(10)  если требуется поставить ожидание загрузки динамических элементов
         self.session= SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
