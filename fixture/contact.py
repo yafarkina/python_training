@@ -1,3 +1,5 @@
+from model.contact import Contact
+
 class ContactHelper:
 
     def __init__(self, app):
@@ -13,22 +15,30 @@ class ContactHelper:
         # open contact page
         wd.find_element_by_link_text("add new").click()
 
+    def open_home_page(self):
+        wd = self.app.wd
+        # open contact page
+        wd.find_element_by_link_text("home").click()
+
     def create(self, contact):
         wd = self.app.wd
-        #self.open_contact_page()
+        self.open_contact_page()
         # fill contact form
         self.fill_contact_form(contact)
         # submit contact creation
         wd.find_element_by_name("submit").click()
+        self.return_to_home_page()
 
     def delete_first_contact(self):
         wd = self.app.wd
+        self.open_home_page()
         self.select_first_contact()
         wd.find_element_by_name("delete").click()
         self.return_to_home_page()
 
     def edit_first_contact(self, contact):
         wd = self.app.wd
+        self.open_home_page()
         self.select_first_contact()
         wd.find_element_by_css_selector("img[title=\"Edit\"]").click()
         self.fill_contact_form(contact)
@@ -41,23 +51,30 @@ class ContactHelper:
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.firstname)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.lastname)
-        wd.find_element_by_name("company").click()
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(contact.company)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.address)
-        wd.find_element_by_name("home").click()
-        wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(contact.telephone)
+        self.change_fild_value("firstname", contact.firstname)
+        self.change_fild_value("lastname", contact.lastname)
+        self.change_fild_value("company", contact.company)
+        self.change_fild_value("address", contact.address)
+        self.change_fild_value("home", contact.telephone)
+
+    def change_fild_value(self, fild_name, fild_value):
+        wd = self.app.wd
+        if fild_value is not None:
+           wd.find_element_by_name(fild_name).click()
+           wd.find_element_by_name(fild_name).clear()
+           wd.find_element_by_name(fild_name).send_keys(fild_value)
 
     def count(self):
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
 
+    def get_contact_list(self):
+        wd = self.app.wd
+        contacts = []
+        for element in wd.find_elements_by_css_selector("tr[name=\"entry\"]"):
+        #for element in wd.find_elements_by_css_selector("tr.entry"):
+            cell = element.find_elements_by_tag_name("td")
+            firstname = cell[2].text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(firstname = firstname, id = id))
+        return contacts
