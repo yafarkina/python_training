@@ -63,12 +63,16 @@ class GroupHelper:
         self.return_to_group_page()
         self.group_cache = None
 
-    def edit_first_group(self,group):
+    def edit_first_group(self):
+        wd = self.app.wd
+        self.edit_group_by_index(0)
+
+    def edit_group_by_index(self,group,index):
         wd = self.app.wd
         self.open_group_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # open page edit
-        wd.find_element_by_name("edit").click()
+        wd.find_elements_by_name("edit")[index].click()
         # fill form
         self.fill_group_form(group)
         #submit form
@@ -77,12 +81,16 @@ class GroupHelper:
         self.group_cache = None
 
 
-    def modify_first_group(self, new_group_data):
+    def modify_first_group(self):
+        wd = self.app.wd
+        self.modify_group_by_index(0)
+
+    def modify_group_by_index(self, new_group_data, index):
         wd = self.app.wd
         self.open_group_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         # open page edit
-        wd.find_element_by_name("edit").click()
+        wd.find_elements_by_name("edit")[index].click()
         # fill form
         self.fill_group_form(new_group_data)
         # submit form

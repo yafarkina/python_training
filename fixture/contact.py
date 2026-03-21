@@ -42,11 +42,15 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
-    def edit_first_contact(self, contact):
+    def edit_first_contact(self):
+        wd = self.app.wd
+        self.edit_contact_by_index(0)
+
+    def edit_contact_by_index(self, contact, index):
         wd = self.app.wd
         self.open_home_page()
-        self.select_first_contact()
-        wd.find_element_by_css_selector("img[title=\"Edit\"]").click()
+        self.select_contact_by_index(index)
+        wd.find_elements_by_css_selector("img[title=\"Edit\"]")[index].click()
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
