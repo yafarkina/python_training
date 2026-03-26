@@ -1,0 +1,31 @@
+import re
+
+def test_personal_data_on_home_page(app):
+    contact_from_home_page = app.contact.get_contact_list()[0]
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    assert contact_from_home_page.firstname == clear(contact_from_edit_page.firstname)
+    assert contact_from_home_page.lastname == clear(contact_from_edit_page.lastname)
+    assert contact_from_home_page.address == clear(contact_from_edit_page.address)
+    assert contact_from_home_page.homephone == clear(contact_from_edit_page.homephone)
+    assert contact_from_home_page.workphone == clear(contact_from_edit_page.workphone)
+    assert contact_from_home_page.mobilephone == clear(contact_from_edit_page.mobilephone)
+    assert contact_from_home_page.email == clear(contact_from_edit_page.email)
+    assert contact_from_home_page.email2 == clear(contact_from_edit_page.email2)
+    assert contact_from_home_page.email3 == clear(contact_from_edit_page.email3)
+
+def test_contact_on_view_page(app):
+    contact_from_view_page = app.contact.get_contact_info_from_view_page(0)
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    assert contact_from_view_page.firstname == clear(contact_from_edit_page.firstname)
+    assert contact_from_view_page.lastname == clear(contact_from_edit_page.lastname)
+    assert contact_from_view_page.address == clear(contact_from_edit_page.address)
+    assert contact_from_view_page.homephone == contact_from_edit_page.homephone
+    assert contact_from_view_page.workphone == contact_from_edit_page.workphone
+    assert contact_from_view_page.mobilephone == contact_from_edit_page.mobilephone
+    assert contact_from_view_page.email == contact_from_edit_page.email
+    assert contact_from_view_page.email2 == contact_from_edit_page.email2
+    assert contact_from_view_page.email3 == contact_from_edit_page.email3
+
+def clear(s):
+    return re.sub("[() -]", "", s)
+
