@@ -5,7 +5,9 @@ class Contact:
                 firstname =None, lastname = None,
                 company = None, address = None,
                 homephone = None, workphone= None, mobilephone= None,
+                all_phones_from_home_page = None,
                 email = None, email2 = None, email3 = None,
+                all_emails_from_home_page =None,
                 id = None):
        self.firstname = firstname
        self.lastname = lastname
@@ -14,9 +16,11 @@ class Contact:
        self.homephone = homephone
        self.workphone = workphone
        self.mobilephone = mobilephone
+       self.all_phones_from_home_page = all_phones_from_home_page
        self.email = email
        self.email2 = email2
        self.email3 = email3
+       self.all_emails_from_home_page = all_emails_from_home_page
        self.id = id
 
    def __repr__(self):

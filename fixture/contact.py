@@ -112,8 +112,8 @@ class ContactHelper:
                 id_ct = cells[0].find_element_by_name("selected[]").get_attribute("value")
                 lastname = cells[1].text
                 address = cells[3].text
-                all_phones = cells[5].text.splitlines()
-                all_emails = cells[4].text.splitlines()
+                all_phones = cells[5].text
+                all_emails = cells[4].text
                 email = all_emails[0]
                 email2 = all_emails[1]
                 email3 = all_emails[2]
@@ -121,12 +121,14 @@ class ContactHelper:
                                                   id = id_ct,
                                                   lastname=lastname,
                                                   address = address,
+                                                  all_phones_from_home_page = all_phones,
                                                   homephone=all_phones[0],
                                                   mobilephone=all_phones[1],
                                                   workphone=all_phones[2],
                                                   email=email,
                                                   email2=email2,
-                                                  email3=email3
+                                                  email3=email3,
+                                                  all_emails_from_home_page = all_emails
                                                   ))
         return list(self.contact_cache)
 
