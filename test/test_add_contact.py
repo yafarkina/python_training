@@ -18,8 +18,9 @@ def random_string_phone(maxlen):
 
 def random_string_email(maxlen):
     domain_list =["@gmail.com", "@ya.ru", "@mail.ru"]
-    symbols = string.ascii_letters + string.digits
-    return "".join([random.choice(symbols) for i in range(random.randrange(maxlen))]) + random.choice(domain_list)
+    symbols = string.ascii_letters + string.digits + "." + "-" + "_" + "+"
+    local_part = "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+    return local_part + random.choice(domain_list)
 
 testdata = [
     Contact(firstname= random_string_fio("first_name",10),
