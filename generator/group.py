@@ -1,11 +1,13 @@
 import random
 import string
+import os.path
+import json
 from model.group import Group
 
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + " "*10
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
+def random_string(prefix, max_len):
+    symbols = string.ascii_letters + string.digits + " "*10
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(max_len))])
 
 test_data =[
     Group(name = name, header = header, footer = footer)
@@ -19,7 +21,12 @@ testdata_empty = [Group(name = "", header = "", footer = "")]
 testdata_generated = [Group(name = random_string("name", 10),
            header = random_string("header", 20),
            footer = random_string("footer", 20))
-           for i in range(0)
+           for i in range(3)
         ]
 
 testdata = testdata_empty + testdata_generated
+
+file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ("../data/groups.json"))
+
+with open(file, "w") as f:
+    f.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))

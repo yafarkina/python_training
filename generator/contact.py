@@ -1,5 +1,7 @@
 import random
 import string
+import os.path
+import json
 from model.contact import Contact
 
 def random_string_fio(prefix, max_len):
@@ -32,5 +34,10 @@ testdata = [
             email2= random_string_email(10),
             email3= random_string_email(10)
             )
-    for i in range(1)
+    for i in range(3)
 ]
+
+file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ("../data/contacts.json"))
+
+with open(file, "w") as f:
+    f.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
