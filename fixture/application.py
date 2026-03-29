@@ -4,9 +4,9 @@ from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
 
 class Application:
-   # def __init__(self, browser="Firefox", base_url = "http://localhost/addressbook/"):
-    def __init__(self, browser, base_url):
-       # self.wd = WebDriver(executable_path="../drivers/geckodriver.exe")
+    #def __init__(self, browser="Firefox", base_url = "http://localhost/addressbook/"): #если хотим запускать с параметрами прибитыми гвоздями
+    def __init__(self, browser, base_url):         #если хотим запускать указывая параметры из командной строки
+      # self.wd = WebDriver(executable_path="../drivers/geckodriver.exe")
        if browser == "Firefox":
            self.wd = webdriver.Firefox(executable_path="C:\PythonProject\drivers\geckodriver.exe")
        elif browser == "Chrome":
@@ -20,7 +20,6 @@ class Application:
        self.group = GroupHelper(self)
        self.contact = ContactHelper(self)
        self.base_url = base_url
-
 
     def is_valid(self):
         try:
