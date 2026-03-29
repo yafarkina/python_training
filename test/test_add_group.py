@@ -1,5 +1,5 @@
 #  -*- coding: utf-8 -*-
-import pytest
+
 from model.group import Group
 #from data.groups import testdata as testdata
 #from generator.group import testdata as testdata

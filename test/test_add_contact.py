@@ -1,5 +1,5 @@
 #  -*- coding: utf-8 -*-
-import pytest
+
 from model.contact import Contact
 from data.contacts import testdata as testdata
 #from generator.contact import testdata as testdata
