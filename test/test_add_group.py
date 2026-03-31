@@ -1,8 +1,7 @@
 #  -*- coding: utf-8 -*-
 
 from model.group import Group
-#from data.groups import testdata as testdata
-from generator.group import testdata as testdata
+
 
 #@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])  # один из способов параметризации
 

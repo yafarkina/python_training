@@ -1,5 +1,4 @@
 
-
 class SessionHelper:
 
     def __init__(self, app):
@@ -8,7 +7,9 @@ class SessionHelper:
     def login(self, username, password):
         wd = self.app.wd
         # open home page
-        wd.get("http://localhost/addressbook/")
+      #  wd.get("http://localhost/addressbook/")
+        self.app.open_home_page()
+
         # login
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
