@@ -32,13 +32,46 @@ class DbFixture:
         list_contact=[]
         cursor = self.connection.cursor()
         try:
-            cursor.execute("select id, firstname, lastname, company, address, home, mobile, work, email, email2, email3 from addressbook")
+            cursor.execute("select id, firstname, lastname, company, address, home, mobile, work, email, email2, email3 from addressbook where deprecated is null")
             for row in cursor:
                 (id, firstname, lastname, company, address, home, mobile, work, email, email2, email3) = row
-                list_contact.append(Contact(id = str(id), firstname = firstname, lastname = lastname, company=company, address = address, homephone = home, mobilephone = mobile, workphone= work, email = email, email2 =email2, email3= email3))
+                list_contact.append(Contact(id = str(id),
+                                            firstname = firstname,
+                                            lastname = lastname,
+                                            company = company,
+                                            address = address,
+                                            homephone = home,
+                                            mobilephone = mobile,
+                                            workphone = work,
+                                            email = email,
+                                            email2 = email2,
+                                            email3 = email3))
         finally:
             cursor.close()
         return list_contact
+
+#    def get_contact_list(self):
+#        list_contact=[]
+#        cursor = self.connection.cursor()
+#        try:
+#            cursor.execute("select id, firstname, lastname, company, address, home, mobile, work, email, email2, email3 from addressbook where deprecated='0000-00-00 00:00:00'")
+#            for row in cursor:
+#               (id, firstname, lastname, company, address, home, mobile, work, email, email2, email3) = row
+#                list_contact.append(Contact(id = str(id),
+ #                                           firstname = firstname,
+#                                            lastname = lastname,
+ #                                           company=company,
+#                                            address = address,
+#                                            homephone = home,
+#                                            mobilephone = mobile,
+#                                            workphone= work,
+ #                                           email = email,
+ #                                           email2 =email2,
+ #                                           email3= email3))
+#        finally:
+#            cursor.close()
+ #       return list_contact
+
 
     def destroy(self):
         self.connection.close()
