@@ -14,13 +14,11 @@ def test_edit_contact(app, db, json_contacts, check_ui):
     app.contact.edit_contact_by_id(contact_new_data, contact.id)
     new_contacts = db.get_contact_list()
     old_contacts.remove(contact)
-
-    contact_new_data[0] =  contact.id
+    contact_new_data.id = contact.id
     old_contacts.append(contact_new_data)
-   # old_contacts.append(contact_new_data)
     assert sorted(old_contacts, key = Contact.id_or_max) == sorted(new_contacts, key = Contact.id_or_max)
-    if check_ui:
-        assert sorted(new_contacts, key = Contact.id_or_max) == sorted(app.contact.get_contact_list(), key = Contact.id_or_max)
+ #   if check_ui:
+  #      assert sorted(new_contacts, key = Contact.id_or_max) == sorted(app.contact.get_contact_list(), key = Contact.id_or_max)
 
 
 

@@ -72,7 +72,7 @@ class ContactHelper:
 
    #     self.fill_contact_form(contact)
         #
-        wd.find_element_by_name("update").click()
+    #    wd.find_element_by_name("update").click()
        #
      #   self.return_to_home_page()
       #  self.contact_cache = None
@@ -95,7 +95,7 @@ class ContactHelper:
     def open_contact_to_edit_by_id(self, id):
         wd = self.app.wd
         self.select_contact_by_id(id)
-        wd.find_element_by_css_selector("img[title=\"Edit\"], a[href*='%s']" % id).click()
+        wd.find_element_by_css_selector("a[href=\"edit.php?id=%s\"]" % id).click()
 
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
@@ -200,8 +200,11 @@ class ContactHelper:
         lastname = all_ls[0].split(" ")[1]
         address = all_ls[4]
         homephone= re.search("H: (.*)", text).group(1)
+        print(homephone)
         workphone = re.search("W: (.*)", text).group(1)
+        print(workphone)
         mobilephone = re.search("M: (.*)", text).group(1)
+        print(mobilephone)
         all_emails = re.findall("([\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,})", text)
         email = all_emails[0]
         email2 = all_emails[1]

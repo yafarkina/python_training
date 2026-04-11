@@ -12,13 +12,14 @@ def test_edit_group(app, db, json_groups, check_ui):
     app.group.edit_group_by_id(group_new_data, group.id)
     new_groups = db.get_group_list()
     old_groups.remove(group)
+    group_new_data.id = group.id
     old_groups.append(group_new_data)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
     if check_ui:
         assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 
 
-#def test_modify_group_name(app, db):
+#def test_modify_group_name(app):
 #    if app.group.count() == 0:
 #        app.group.create(Group(name="test_new", header="test_new", footer="test_new"))
 #    old_groups = app.group.get_group_list()
