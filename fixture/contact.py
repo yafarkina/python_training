@@ -97,6 +97,11 @@ class ContactHelper:
         self.select_contact_by_id(id)
         wd.find_element_by_css_selector("a[href=\"edit.php?id=%s\"]" % id).click()
 
+    def open_contact_view_by_id(self, id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
+        wd.find_element_by_css_selector("a[href=\"view.php?id=%s\"]" % id).click()
+
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
        # self.open_home_page()
@@ -189,6 +194,34 @@ class ContactHelper:
                        id = id_ct, homephone = homephone, workphone = workphone, mobilephone = mobilephone,
                        email = email, email2= email2, email3 = email3
                        )
+
+    def get_contact_info_from_view_page_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.open_contact_view_by_id(id)
+        text = wd.find_element_by_id("content").text
+        all_ls = re.findall("(.*)", text)
+        firstname = all_ls[0].split(" ")[0]
+        lastname = all_ls[0].split(" ")[1]
+        address = all_ls[4]
+        homephone = re.search("H: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        all_emails = re.findall("([\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,})", text)
+        email = all_emails[0]
+        email2 = all_emails[1]
+        email3 = all_emails[2]
+        return Contact(
+            firstname=firstname,
+            lastname=lastname,
+            address=address,
+            homephone=homephone,
+            workphone=workphone,
+            mobilephone=mobilephone,
+            email=email,
+            email2=email2,
+            email3=email3
+        )
 
     def get_contact_info_from_view_page(self, index):
         wd = self.app.wd
