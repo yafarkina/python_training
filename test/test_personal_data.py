@@ -22,9 +22,9 @@ def test_personal_data_on_home_page(app, db, check_ui):
 
 def test_contact_on_view_page_db(app, db, check_ui):
     contacts_from_bd = db.get_contact_list()
-    contact = random.choice(contacts_from_bd)
-    contact_from_view_page = app.contact.get_contact_info_from_view_page_by_id(contact.id)
-    assert contact_from_view_page == contact
+    for contact in contacts_from_bd:
+        contact_from_view_page = app.contact.get_contact_info_from_view_page_by_id(contact.id)
+        assert contact_from_view_page == contact
 
 
 #def test_contact_on_view_page(app, db, check_ui):
