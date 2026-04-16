@@ -158,9 +158,9 @@ class ContactHelper:
                 address = cells[3].text
                 all_phones = cells[5].text
                 all_emails = cells[4].text
-                email = all_emails[0]
-                email2 = all_emails[1]
-                email3 = all_emails[2]
+  #              email = all_emails[0]
+   #             email2 = all_emails[1]
+  #              email3 = all_emails[2]
                 self.contact_cache.append(Contact(firstname = firstname,
                                                   id = id_ct,
                                                   lastname=lastname,
@@ -169,10 +169,10 @@ class ContactHelper:
                                                   homephone=all_phones[0],
                                                   mobilephone=all_phones[1],
                                                   workphone=all_phones[2],
-                                                  email=email,
-                                                  email2=email2,
-                                                  email3=email3,
-                                                  all_emails_from_home_page = all_emails
+                                                  all_emails_from_home_page=all_emails,
+                                                  email=all_emails[0],
+                                                  email2=all_emails[1],
+                                                  email3=all_emails[2]
                                                   ))
         return list(self.contact_cache)
 
