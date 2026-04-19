@@ -1,5 +1,9 @@
 import re
+
+from selenium.webdriver.support.select import Select
+
 from model.contact import Contact
+
 
 class ContactHelper:
 
@@ -230,11 +234,8 @@ class ContactHelper:
         lastname = all_ls[0].split(" ")[1]
         address = all_ls[4]
         homephone= re.search("H: (.*)", text).group(1)
-        print(homephone)
         workphone = re.search("W: (.*)", text).group(1)
-        print(workphone)
         mobilephone = re.search("M: (.*)", text).group(1)
-        print(mobilephone)
         all_emails = re.findall("([\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,})", text)
         email = all_emails[0]
         email2 = all_emails[1]
@@ -251,3 +252,28 @@ class ContactHelper:
                        email3=email3
                        )
 
+    def add_contact_in_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(contact_id)
+        self.select_group_to_add_by_id(group_id)
+        wd.find_element_by_name("add").click()
+
+    def select_group_to_add_by_id(self, group_id):
+        wd = self.app.wd
+        dropdown_group = wd.find_element_by_name("to_group")
+        select = Select(dropdown_group)
+        select.select_by_value("%s" % group_id)
+
+    def select_group_by_id(self, group_id):
+        wd = self.app.wd
+        dropdown_group = wd.find_element_by_name("group")
+        select = Select(dropdown_group)
+        select.select_by_value("%s" % group_id)
+
+    def del_contact_in_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_group_by_id(group_id)
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_name("remove").click()
